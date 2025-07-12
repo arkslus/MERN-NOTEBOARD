@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import NoteCard from "../components/NoteCard";
 // import axios from "axios";
 import api from "../lib/axios_api";
+import NotesNotFound from "../components/NotesNotFound";
 
 const HomePage = () => {
   // create a state for the rate limiter
@@ -23,7 +24,8 @@ const HomePage = () => {
         const res = await api.get("/notes");
         console.log(res.data);
         setNotes(res.data);
-        setRateLimited(false);``
+        setRateLimited(false);
+        ``;
       } catch (error) {
         console.log("Error fetching notes");
         console.log(error.response);
@@ -58,11 +60,7 @@ const HomePage = () => {
         )}
 
         {/* create a message to display when no notes are found  */}
-        {notes.length === 0 && !isRateLimited && (
-          <div className="text-center font-mono font-extrabold text-[#023047] py-10">
-            No notes found. Create a new note using the "Add Note" button above.
-          </div>
-        )}
+        {notes.length === 0 && !isRateLimited && <NotesNotFound />}
 
         {/* display the notes */}
         {notes.length > 0 && !isRateLimited && (
